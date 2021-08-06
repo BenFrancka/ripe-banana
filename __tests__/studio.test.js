@@ -53,4 +53,15 @@ describe('Studio routes', () => {
       },
     ]);
   });
+  it('gets a studio by id via GET', async () => {
+    const studio = await Studio.create({
+      name: 'Warner Brothers',
+      city: 'Burbank',
+      state: 'California',
+      country: 'USA',
+    });
+    const res = await request(app).get(`/api/v1/studios/${studio.id}`);
+
+    expect(res.body).toEqual(studio.toJSON());
+  });
 });
