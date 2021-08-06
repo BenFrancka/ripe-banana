@@ -1,7 +1,7 @@
 import database from '../lib/utils/database.js';
 import request from 'supertest';
 import app from '../lib/app.js';
-import Film from '../lib/models/Film.js';
+//import Film from '../lib/models/Film.js';
 import Studio from '../lib/models/Studio.js';
 
 describe('Film routes', () => {
@@ -25,7 +25,7 @@ describe('Film routes', () => {
     expect(res.body).toEqual({
       id: 1,
       title: 'Anaconda',
-      studio: studio.id,
+      studio: `${studio.id}`,
       released: 1997,
     });
   });
