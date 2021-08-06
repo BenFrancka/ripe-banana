@@ -50,4 +50,15 @@ describe('Reviewer routes', () => {
     ]);
   });
 
+  it('returns a detail view of a reviewer by id via GET', async () => {
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes'
+    });
+
+    const res = await request(app).get(`/api/v1/reviewers/${reviewer.id}`);
+
+    expect(res.body).toEqual(reviewer.toJSON());
+  });
+
 });
