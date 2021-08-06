@@ -61,4 +61,22 @@ describe('Reviewer routes', () => {
     expect(res.body).toEqual(reviewer.toJSON());
   });
 
+  it('updates a reviewer entry by id', async () => {
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes'
+    });
+
+    const res = await request(app)
+      .patch(`/api/v1/reviewers/${reviewer.id}`)
+      .send({ company: 'some other company' });
+
+    expect(res.body).toEqual({
+      id: 1,
+      name: 'Bob',
+      company: 'some other company'
+    });
+  });
+
+  
 });
