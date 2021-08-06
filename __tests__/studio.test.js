@@ -26,6 +26,7 @@ describe('Studio routes', () => {
       country: 'USA',
     });
   });
+
   it('gets all studios via GET', async () => {
     const studio1 = {
       name: 'Warner Brothers',
@@ -53,6 +54,7 @@ describe('Studio routes', () => {
       },
     ]);
   });
+  
   it('gets a studio by id via GET', async () => {
     const studio = await Studio.create({
       name: 'Warner Brothers',
