@@ -18,14 +18,14 @@ describe('Film routes', () => {
     });
     const res = await request(app).post('/api/v1/films').send({
       title: 'Anaconda',
-      studio: studio.id,
+      StudioId: studio.id,
       released: 1997,
     });
 
     expect(res.body).toEqual({
       id: 1,
       title: 'Anaconda',
-      studio: `${studio.id}`,
+      StudioId: studio.id,
       released: 1997,
     });
   });
@@ -39,12 +39,12 @@ describe('Film routes', () => {
     });
     const film1 = {
       title: 'Anaconda',
-      studio: studio.id,
+      StudioId: studio.id,
       released: 1997,
     };
     const film2 = {
       title: 'Space Jam',
-      studio: studio.id,
+      StudioId: studio.id,
       released: 1996,
     };
 
@@ -54,11 +54,22 @@ describe('Film routes', () => {
     expect(res.body).toEqual([
       {
         id: 1,
-        ...film1,
+        Studio: {
+          id: 1,
+          name: 'Warner Brothers'
+        },
+        title: 'Anaconda',
+        released: 1997,
       },
+      
       {
         id: 2,
-        ...film2,
+        Studio: {
+          id: 1,
+          name: 'Warner Brothers'
+        },
+        title: 'Space Jam',
+        released: 1996,
       },
     ]);
   });
