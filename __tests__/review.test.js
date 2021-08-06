@@ -1,7 +1,7 @@
 import database from '../lib/utils/database.js';
 import request from 'supertest';
 import app from '../lib/app.js';
-// import Review from '../lib/models/Review.js';
+import Review from '../lib/models/Review.js';
 import Film from '../lib/models/Film';
 import Reviewer from '../lib/models/Reviewer';
 import Studio from '../lib/models/Studio';
@@ -18,12 +18,12 @@ describe('Review routes', () => {
       state: 'California',
       country: 'USA',
     });
-    await Film.create({
+    const film = await Film.create({
       title: 'Anaconda',
       StudioId: studio.id,
       released: 1997,
     });
-    await Reviewer.create({
+    const reviewer = await Reviewer.create({
       name: 'Bob',
       company: 'Rotten Tomatoes',
     });
@@ -32,20 +32,16 @@ describe('Review routes', () => {
       rating: 3,
       ReviewerId: 1,
       review: 'this was fine i guess',
-      FilmId: 1,
+      
+      FilmId: film.id,
     });
 
     expect(res.body).toEqual({
       id: 1,
       rating: 3,
       review: 'this was fine i guess',
-      Film: {
-        id: 1,
-        title: 'Anaconda',
-      },
-      Reviewer: {
-        name: 'Bob',
-      },
+      FilmId: film.id,
+      ReviewerId: reviewer.id,
     });
   });
 });
