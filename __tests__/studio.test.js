@@ -12,4 +12,3 @@ describe('Studio routes', () => {
     
     expect(result.body).toEqual({ id: 1, name: 'Warner Brothers', city: 'Burbank', state: 'California', country: 'USA' });
   });
-});
