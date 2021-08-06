@@ -45,4 +45,16 @@ describe('Actor routes', () => {
       ...actor2
     }]);
   });
+    
+  it('returns a detail view of an actor by id via GET', async () => {
+    const actor = await Actor.create({
+      name: 'Denzel Washington',
+      dob: '1954-12-28',
+      pob: 'Mount Vernon, NY' 
+    });
+      
+    const res = await request(app).get(`/api/v1/actors/${actor.id}`);
+
+    expect(res.body).toEqual(actor.toJSON());
+  });
 });
