@@ -8,13 +8,13 @@ describe('Actor routes', () => {
   });
   it('creates an actor via POST', async () => {
     const res = await request(app).post('/api/v1/actors')
-      .send({ name: 'Ben Affleck', dob: '1972-08-15', pob: 'Berkley, CA' });
+      .send({ name: 'Ben Affleck', dob: '1972-08-15', pob: 'Berkeley, CA' });
       
     expect(res.body).toEqual({
       id: 1,
       name: 'Ben Affleck',
       dob: '1972-08-15',
-      pob: 'Berkely, CA'
+      pob: 'Berkeley, CA'
     });
   });
 });
