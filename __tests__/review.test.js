@@ -32,7 +32,7 @@ describe('Review routes', () => {
       rating: 3,
       ReviewerId: 1,
       review: 'this was fine i guess',
-      
+
       FilmId: film.id,
     });
 
@@ -43,5 +43,51 @@ describe('Review routes', () => {
       FilmId: film.id,
       ReviewerId: reviewer.id,
     });
+  });
+  it('gets all reviews via GET', async () => {
+    const studio = await Studio.create({
+      name: 'Warner Brothers',
+      city: 'Burbank',
+      state: 'California',
+      country: 'USA',
+    });
+    const film = await Film.create({
+      title: 'Anaconda',
+      StudioId: studio.id,
+      released: 1997,
+    });
+    const review1 = await Review.create({
+      rating: 3,
+      review: 'this was fine i guess',
+      FilmId: film.id,
+    });
+    const review2 = await Review.create({
+      rating: 5,
+      review: 'absolutely lit',
+      FilmId: film.id,
+    });
+    await Review.bulkCreate([review1, review2]);
+    const res = await request(app).get('/api/v1/reviews');
+
+    expect(res.body).toEqual([
+      {
+        id: 1,
+        rating: 3,
+        review: 'this was fine i guess',
+        Film: {
+          id: 1,
+          title: 'Anaconda',
+        },
+      },
+      {
+        id: 2,
+        rating: 5,
+        review: 'absolutely lit',
+        Film: {
+          id: 1,
+          title: 'Anaconda',
+        },
+      },
+    ]);
   });
 });
