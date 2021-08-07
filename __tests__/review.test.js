@@ -44,6 +44,7 @@ describe('Review routes', () => {
       ReviewerId: reviewer.id,
     });
   });
+
   it('gets all reviews via GET', async () => {
     const studio = await Studio.create({
       name: 'Warner Brothers',
@@ -56,17 +57,22 @@ describe('Review routes', () => {
       StudioId: studio.id,
       released: 1997,
     });
-    const review1 = await Review.create({
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes',
+    });
+    await Review.create({
       rating: 3,
       review: 'this was fine i guess',
       FilmId: film.id,
+      ReviewerId: reviewer.id,
     });
-    const review2 = await Review.create({
+    await Review.create({
       rating: 5,
       review: 'absolutely lit',
       FilmId: film.id,
+      ReviewerId: reviewer.id,
     });
-    await Review.bulkCreate([review1, review2]);
     const res = await request(app).get('/api/v1/reviews');
 
     expect(res.body).toEqual([
