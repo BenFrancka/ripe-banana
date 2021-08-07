@@ -74,7 +74,7 @@ describe('Film routes', () => {
     ]);
   });
 
-  it('gets a film by id with GET, includes reviews, studio, and cast/actor', async () => {
+  // it('gets a film by id with GET, includes reviews, studio, and cast/actor', async () => {
       
-  }
+  // }
 });
