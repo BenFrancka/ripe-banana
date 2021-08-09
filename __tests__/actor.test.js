@@ -55,18 +55,22 @@ describe('Actor routes', () => {
       state: 'California',
       country: 'USA',
     });
-
-    const film = await Film.create({
-      title: 'Anaconda',
-      StudioId: studio.id,
-      released: 1997,
-    });
+    
     const actor = await Actor.create({
       name: 'Denzel Washington',
       dob: '1954-12-28',
-      pob: 'Mount Vernon, NY' 
+      pob: 'Mount Vernon, NY',
     });
-      
+    
+    const film = await Film.create({
+      title: 'Anaconda',
+      released: 1997,
+    });
+
+    await actor.setFilms(film);
+    await film.setStudio(studio);
+    await film.setActors(actor);
+
     const res = await request(app).get(`/api/v1/actors/${actor.id}`);
 
     expect(res.body).toEqual({
