@@ -76,11 +76,11 @@ describe('Reviewer routes', () => {
       id: reviewer.id,
       name: 'Bob',
       company: 'Rotten Tomatoes',
-      reviews: [{
+      Reviews: [{
         id: review.id,
         rating: 3,
         review: 'this was fine i guess',
-        film: {
+        Film: {
           id: film.id,
           title: 'Anaconda',
         },
