@@ -105,5 +105,21 @@ describe('Reviewer routes', () => {
     });
   });
 
+  it('deletes a reviewer with no reviews by id', async () => {
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes'
+    });
+
+    const res = await request(app)
+      .delete(`/api/v1/reviewers/${reviewer.id}`);
+      
+
+    expect(res.body).toEqual({
+      message: 'reviewer deleted'
+    });
+  });
+
+
 
 });
