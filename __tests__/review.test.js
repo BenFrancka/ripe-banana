@@ -96,4 +96,24 @@ describe('Review routes', () => {
       },
     ]);
   });
+
+  it('deletes a review via DELETE', async () => {
+    const film = await Film.create({
+      title: 'Anaconda',
+      released: 1997,
+    });
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes',
+    });
+    const  review = await Review.create({
+      rating: 3,
+      review: 'this was fine i guess',
+      FilmId: film.id,
+      ReviewerId: reviewer.id,
+    });
+    const res = await request(app).delete(`/api/v1/reviews/${review.id}`);
+
+    expect(res.body).toEqual('review go bye-bye');
+  });
 });
