@@ -48,7 +48,7 @@ describe('Actor routes', () => {
     }]);
   });
     
-  it.only('returns a detail view of an actor by id via GET', async () => {
+  it('returns a detail view of an actor by id via GET', async () => {
     const studio = await Studio.create({
       name: 'Warner Brothers',
       city: 'Burbank',
@@ -71,7 +71,6 @@ describe('Actor routes', () => {
     await film.setStudio(studio);
     await film.setActors(actor);
 
-    console.log('studio', studio, 'actor', actor, 'film', film);
     const res = await request(app).get(`/api/v1/actors/${actor.id}`);
 
     expect(res.body).toEqual({
