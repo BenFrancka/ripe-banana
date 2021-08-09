@@ -2,6 +2,8 @@ import database from '../lib/utils/database.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 import Reviewer from '../lib/models/Reviewer.js';
+import Review from '../lib/models/Review.js';
+import Film from '../lib/models/Film.js';
 
 describe('Reviewer routes', () => {
   beforeEach(() => {
@@ -51,14 +53,39 @@ describe('Reviewer routes', () => {
   });
 
   it('returns a detail view of a reviewer by id via GET', async () => {
+    const film = await Film.create({
+      title: 'Anaconda',
+      released: 1997,
+    });
+    
     const reviewer = await Reviewer.create({
       name: 'Bob',
       company: 'Rotten Tomatoes'
     });
 
+    const review = await Review.create({
+      rating: 3,
+      review: 'this was fine i guess',
+      FilmId: film.id,
+      ReviewerId: reviewer.id,
+    });
+
     const res = await request(app).get(`/api/v1/reviewers/${reviewer.id}`);
 
-    expect(res.body).toEqual(reviewer.toJSON());
+    expect(res.body).toEqual({
+      id: reviewer.id,
+      name: 'Bob',
+      company: 'Rotten Tomatoes',
+      Reviews: [{
+        id: review.id,
+        rating: 3,
+        review: 'this was fine i guess',
+        Film: {
+          id: film.id,
+          title: 'Anaconda',
+        },
+      }],
+    });
   });
 
   it('updates a reviewer entry by id', async () => {
@@ -78,5 +105,5 @@ describe('Reviewer routes', () => {
     });
   });
 
-  
+
 });
