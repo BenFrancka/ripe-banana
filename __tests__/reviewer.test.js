@@ -105,5 +105,47 @@ describe('Reviewer routes', () => {
     });
   });
 
+  it('deletes a reviewer with no reviews by id', async () => {
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes'
+    });
+
+    const res = await request(app)
+      .delete(`/api/v1/reviewers/${reviewer.id}`);
+      
+
+    expect(res.body).toEqual({
+      message: 'reviewer deleted'
+    });
+  });
+
+  it.only('will not delete a reviewer that has reviews', async () => {
+    const film = await Film.create({
+      title: 'Anaconda',
+      released: 1997,
+    });
+    const reviewer = await Reviewer.create({
+      name: 'Bob',
+      company: 'Rotten Tomatoes',
+    });
+    await Review.create({
+      rating: 3,
+      review: 'this was fine i guess',
+      FilmId: film.id,
+      ReviewerId: reviewer.id,
+    });
+
+
+    const res = await request(app)
+      .delete(`/api/v1/reviewers/${reviewer.id}`);
+    
+
+    expect(res.body).toEqual({
+      message: 'reviewers with reviews cannot by deleted'
+    });
+  });
+
+
 
 });
