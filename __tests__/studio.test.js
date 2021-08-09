@@ -2,7 +2,7 @@ import database from '../lib/utils/database.js';
 import request from 'supertest';
 import app from '../lib/app.js';
 import Studio from '../lib/models/Studio.js';
-// import Studio from '../lib/models/Studio';
+import Film from '../lib/models/Film.js';
 
 describe('Studio routes', () => {
   beforeEach(() => {
@@ -56,6 +56,12 @@ describe('Studio routes', () => {
   });
   
   it('gets a studio by id via GET', async () => {
+    const film = await Film.create({
+      title: 'Anaconda',
+      StudioId: studio.id,
+      released: 1997,
+    });
+    
     const studio = await Studio.create({
       name: 'Warner Brothers',
       city: 'Burbank',
@@ -64,6 +70,16 @@ describe('Studio routes', () => {
     });
     const res = await request(app).get(`/api/v1/studios/${studio.id}`);
 
-    expect(res.body).toEqual(studio.toJSON());
+    expect(res.body).toEqual({
+      id: studio.id,
+      name: 'Warner Brothers',
+      city: 'Burbank',
+      state: 'California',
+      country: 'USA',
+      Films: [{
+        id: film.id,
+        title: film.title
+      }]
+    });
   });
 });
