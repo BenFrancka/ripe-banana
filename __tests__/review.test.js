@@ -114,6 +114,6 @@ describe('Review routes', () => {
     });
     const res = await request(app).delete(`/api/v1/reviews/${review.id}`);
 
-    expect(res.body).toEqual('review go bye-bye');
+    expect(res.body).toEqual({ message: 'review go bye-bye' });
   });
 });
