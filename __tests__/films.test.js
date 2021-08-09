@@ -117,22 +117,22 @@ describe('Film routes', () => {
     expect(res.body).toEqual({
       title: 'Anaconda',
       released: 1997,
-      studio: {
+      Studio: {
         id: studio.id,
         name: 'Warner Brothers',
       },
-      cast: [
+      Actors: [
         {
           id: actor.id,
           name: 'Denzel Washington',
         },
       ],
-      reviews: [
+      Reviews: [
         {
           id: review.id,
           rating: 3,
           review: 'this was fine i guess',
-          reviewer: {
+          Reviewer: {
             id: reviewer.id,
             name: 'Bob',
           },
